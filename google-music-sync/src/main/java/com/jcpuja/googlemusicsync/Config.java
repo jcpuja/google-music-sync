@@ -22,15 +22,7 @@ public class Config {
 	}
 
 	public String getMusicDirectory() throws IOException {
-		String musicDir = getPropertyFromConfigFile(LOCAL_MUSICDIR);
-
-		// FIXME: I need to add "/file" to the path because GoogleMusicAPI uses
-		// "path.separator" system property which resolves to ";" on this
-		// system. Why not "/" ?
-		if (!musicDir.endsWith("/")) {
-			musicDir += "/";
-		}
-		return musicDir + "file";
+		return getPropertyFromConfigFile(LOCAL_MUSICDIR);
 	}
 
 	private String getPropertyFromConfigFile(String property) throws IOException {
