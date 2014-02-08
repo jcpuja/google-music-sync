@@ -34,18 +34,25 @@ public class Main {
 		// Retrieve list of "free and purchased" songs
 		List<Song> purchasedSongs = dl.listPurchasedSongs();
 
-		Song firstSong = purchasedSongs.get(0);
+		int songCount = purchasedSongs.size();
+		for (int i = 0; i < songCount; i++) {
 
-		String songFolder = naming.getSongFolder(firstSong);
-		String songFullPath = songFolder + File.separator + naming.getSongFileName(firstSong);
-		File songFile = new File(songFullPath);
+			Song song = purchasedSongs.get(i);
 
-		if (!songFile.exists()) {
-			// Download first song
-			dl.downloadSong(firstSong, songFile);
+			System.out.println("Checking song " + (i + 1) + " of " + songCount);
+
+			String songFolder = naming.getSongFolder(song);
+			String songFullPath = songFolder + File.separator + naming.getSongFileName(song);
+			File songFile = new File(songFullPath);
+
+			if (!songFile.exists()) {
+				System.out.println("Song not found on filesystem, downloading");
+				dl.downloadSong(song, songFile);
+			} else {
+				System.out.println("Song found on filesystem, skipping this download");
+			}
 		}
 		System.out.println("Done.");
-		// TODO Iterate on all files
 		// TODO Save song metadata in tags
 	}
 }
